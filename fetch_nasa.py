@@ -2,15 +2,15 @@ import datetime
 import os
 import requests
 
-from dotenv import load_dotenv
-from main import image_downloader, ensure_category, extension_parser
+
+from extension_handler import get_extension
+from image_downloader import get_image
 
 
-def fetch_nasa_apod():
-    load_dotenv()
+def fetch_nasa_apod(images_folder, token):
     response = requests.get(
         'https://api.nasa.gov/planetary/apod?api_key={}&count=10'
-        .format(os.environ['NASA_TOKEN']))
+        .format(token))
     response.raise_for_status()
     launches_data = response.json()
     launch_images = []
@@ -21,19 +21,16 @@ def fetch_nasa_apod():
     for image_number, image_url in enumerate(launch_images, start=1):
         image_name = 'nasa{}{}'.format(
             image_number,
-            extension_parser(image_url))
-        folder_name = 'images'
-        ensure_category(folder_name)
-        filepath = os.path.join(folder_name, image_name)
+            get_extension(image_url))
+        filepath = os.path.join(images_folder, image_name)
 
-        image_downloader(image_url, filepath)
+        get_image(image_url, filepath)
 
 
-def fetch_nasa_epic():
-    load_dotenv()
+def fetch_nasa_epic(images_folder, token):
     response = requests.get(
         'https://api.nasa.gov/EPIC/api/natural/images?api_key={}'
-        .format(os.environ['NASA_TOKEN']))
+        .format(token))
     response.raise_for_status()
     photos_data = response.json()
 
@@ -45,10 +42,8 @@ def fetch_nasa_epic():
             image_date_datetime.strftime('%m'),
             image_date_datetime.strftime('%d'),
             photo_data['image'],
-            os.environ['NASA_TOKEN'])
-        folder_name = 'images'
-        ensure_category(folder_name)
+            token)
         image_name = 'epic{}.png'.format(image_number)
-        filepath = os.path.join(folder_name, image_name)
+        filepath = os.path.join(images_folder, image_name)
 
-        image_downloader(image_url, filepath)
+        get_image(image_url, filepath)
