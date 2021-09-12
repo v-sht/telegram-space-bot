@@ -4,7 +4,7 @@ import requests
 from pprint import pprint
 
 from extension_handler import get_extension
-from image_downloader import get_image
+from image_downloader import download_image
 
 
 def fetch_nasa_apod(images_folder, token):
@@ -17,9 +17,9 @@ def fetch_nasa_apod(images_folder, token):
     response = requests.get(
         'https://api.nasa.gov/planetary/apod', params=payload)
     response.raise_for_status()
-    launches_data = response.json()
+    launches = response.json()
 
-    for image_number, launch in enumerate(launches_data, start=1):
+    for image_number, launch in enumerate(launches, start=1):
         image_name = 'nasa{}{}'.format(
             image_number,
             get_extension(launch['url']))
@@ -37,15 +37,15 @@ def fetch_nasa_epic(images_folder, token):
     response = requests.get(
         'https://api.nasa.gov/EPIC/api/natural/images', params=payload)
     response.raise_for_status()
-    photos_data = response.json()
+    photos = response.json()
 
-    for image_number, photo_data in enumerate(photos_data, start=1):
-        image_date = photo_data['date']
+    for image_number, photo in enumerate(photos, start=1):
+        image_date = photo['date']
         image_date_datetime = datetime.datetime.fromisoformat(image_date)
 
         image_url = 'https://api.nasa.gov/EPIC/archive/natural/{0}/png/{1}.png'.format(
             image_date_datetime.strftime('%Y/%m/%d'),
-            photo_data['image'])
+            photo['image'])
         image_name = 'epic{}.png'.format(image_number)
         filepath = os.path.join(images_folder, image_name)
 
