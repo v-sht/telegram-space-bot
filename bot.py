@@ -30,7 +30,7 @@ def main():
     fetch_spacex_launch(images_folder, 108)
     fetch_nasa_apod(images_folder, nasa_token)
     fetch_nasa_epic(images_folder, nasa_token)
-    upload_image(images_folder, tg_token, chat_id)
+    upload_images(images_folder, tg_token, chat_id)
 
 
 if __name__ == '__main__':
