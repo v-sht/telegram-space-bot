@@ -25,7 +25,7 @@ def fetch_nasa_apod(images_folder, token):
             get_extension(launch['url']))
         filepath = os.path.join(images_folder, image_name)
 
-        get_image(launch['url'], filepath)
+        download_image(launch['url'], filepath)
 
 
 def fetch_nasa_epic(images_folder, token):
@@ -49,4 +49,4 @@ def fetch_nasa_epic(images_folder, token):
         image_name = 'epic{}.png'.format(image_number)
         filepath = os.path.join(images_folder, image_name)
 
-        get_image(image_url, filepath, payload)
+        download_image(image_url, filepath, payload)
