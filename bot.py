@@ -7,12 +7,12 @@ from fetch_nasa import fetch_nasa_apod, fetch_nasa_epic
 from fetch_spacex import fetch_spacex_last_launch
 
 
-def upload_image(images_folder, token, chat_id):
+def upload_images(images_folder, token, chat_id):
     bot = telegram.Bot(token=token)
     images = os.listdir(images_folder)
     while True:
         for image in images:
-            with open('images/{}'.format(image), 'rb') as photo:
+            with open('{0}/{1}'.format(images_folder, image), 'rb') as photo:
                 bot.send_photo(
                     chat_id=chat_id,
                     photo=photo)
