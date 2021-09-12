@@ -1,7 +1,7 @@
 import os
 import requests
 
-from image_downloader import get_image
+from image_downloader import download_image
 
 
 def fetch_spacex_launch(images_folder, launch_number):

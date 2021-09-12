@@ -4,7 +4,7 @@ import time
 
 from dotenv import load_dotenv
 from fetch_nasa import fetch_nasa_apod, fetch_nasa_epic
-from fetch_spacex import fetch_spacex_last_launch
+from fetch_spacex import fetch_spacex_launch
 
 
 def upload_images(images_folder, token, chat_id):
