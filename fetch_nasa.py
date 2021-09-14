@@ -1,7 +1,6 @@
 import datetime
 import os
 import requests
-from pprint import pprint
 
 from extension_handler import get_extension
 from image_downloader import download_image
